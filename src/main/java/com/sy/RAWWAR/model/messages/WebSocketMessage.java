@@ -1,4 +1,4 @@
-package com.sy.RAWWAR.model;
+package com.sy.RAWWAR.model.messages;
 
 public class WebSocketMessage {
     public final String toWhom;

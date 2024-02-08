@@ -1,4 +1,4 @@
-package com.sy.RAWWAR.model;
+package com.sy.RAWWAR.model.messages;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
