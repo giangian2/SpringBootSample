@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import com.sy.RAWWAR.model.messages.LacsGatewayEventMessage;
+import com.sy.RAWWAR.model.messages.RegisterMessage;
 import com.sy.RAWWAR.model.messages.WebSocketMessage;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,11 +54,14 @@ public class WebSocketController {
      */
     @MessageMapping("/register") // 3
     @SendTo("/topic/room")
-    public String registerUser(String webChatUsername) {
+    public String registerUser(RegisterMessage message) {
 
-        connectedKits.add(webChatUsername);
-        System.out.println("ok registrato con: " + webChatUsername);
-        return "ok registrato con: " + webChatUsername;
+        /*
+         * connectedKits.add(webChatUsername);
+         * System.out.println("ok registrato con: " + webChatUsername);
+         * return "ok registrato con: " + webChatUsername;
+         */
+        return "";
 
     }
 
