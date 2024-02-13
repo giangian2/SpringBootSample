@@ -32,7 +32,8 @@ public class SecurityConfig {
                                 .and()
                                 .authorizeHttpRequests((authz) -> authz
                                                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                                                .requestMatchers(HttpMethod.GET, "/websocket-chat/**").permitAll())
+                                                .requestMatchers(HttpMethod.GET, "/events/**").permitAll()
+                                                .requestMatchers(HttpMethod.GET, "/kits/**").permitAll())
                                 .headers().cacheControl();
 
                 return http.build();
