@@ -8,9 +8,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.sy.RAWWAR.dto.Passcode;
 import com.sy.RAWWAR.http.middleware.AuthEndpointFIlter;
 import com.sy.RAWWAR.model.ApiConfig;
 import com.sy.RAWWAR.model.ApiConfigFromYaml;
+import com.sy.RAWWAR.repository.PasscodeRepository;
 
 @Configuration
 public class AppConfiguration {
@@ -21,9 +23,10 @@ public class AppConfiguration {
 	}
 
 	@Bean
-	CommandLineRunner run(ApiConfig apiConfig) {
+	CommandLineRunner run(ApiConfig apiConfig, PasscodeRepository repo) {
 		return args -> {
 			System.out.println(apiConfig.getApiKey());
+
 		};
 
 	}

@@ -28,7 +28,8 @@
                     <label for="name">What is your name?</label>
                     <input type="text" id="name" class="form-control" placeholder="Your name here...">
                 </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
+                <button id="send" class="btn btn-default" type="submit">Subscribe and send mission event</button>
+                <button id="stream" class="btn btn-default" type="submit">send revive event</button>
             </form>
         </div>
     </div>
@@ -57,7 +58,10 @@ stompClient.onConnect = (frame) => {
     setConnected(true);
     console.log('Connected: ' + frame);
     stompClient.subscribe('/topic/room', (greeting) => {
-        console.log("received");
+        alert(greeting);
+    });
+    stompClient.subscribe('/user/01/msg', (data) => {
+        alert("evento");
     });
     console.log("subscribed");
 };
@@ -93,12 +97,22 @@ function disconnect() {
     console.log("Disconnected");
 }
 
+function sendEvent(){
+    stompClient.publish({
+            destination: "/app/events",
+            body: JSON.stringify(
+                {
+                    "timestamp": "2023-06-20T21:34:31.354Z",
+                    "type": "hitEvent",
+                    "data": {
+                        "kitId": "01",
+                    }
+                })
+        });
+}
+
     function sendName() {
         alert("ok");
-        stompClient.publish({
-            destination: "/app/register",
-            body: JSON.stringify({ 'name': $("#name").val() })
-        });
         stompClient.publish({
             destination: "/app/events",
             body: JSON.stringify(
@@ -111,6 +125,11 @@ function disconnect() {
                     }
                 })
         });
+        stompClient.publish({
+            destination: "/app/register",
+            body: JSON.stringify({ 'kitId': $("#name").val(), 'missionId':'01', 'passcode':'123456' })
+        });
+        
     }
 
 function showGreeting(message) {
@@ -122,6 +141,7 @@ $(function () {
     $( "#connect" ).click(() => connect());
     $( "#disconnect" ).click(() => disconnect());
     $( "#send" ).click(() => sendName());
+    $("#stream").click(()=> sendEvent());
 });
 </script>
 </body>

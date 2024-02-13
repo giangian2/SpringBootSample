@@ -8,5 +8,5 @@ import lombok.Getter;
 public class RegisterMessage {
     private final String kitId;
     private final String passcode;
-    private final String missioId;
+    private final String missionId;
 }
