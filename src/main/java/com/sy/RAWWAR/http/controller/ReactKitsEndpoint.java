@@ -22,10 +22,10 @@ public class ReactKitsEndpoint {
     public void open(Session session, @PathParam("kitId") String kitId, @PathParam("missionId") String missionId,
             @PathParam("passcode") String passcode) {
 
-        System.out.println(kitId);
         var mission = this.repo.findByMissionId(missionId);
         if (mission.isPresent()) {
             mission.get().addKit(kitId, session);
+            System.out.println(kitId);
         }
     }
 }

@@ -40,6 +40,7 @@ public class LacsServerEndpoint {
         var mission = this.repo.findByMissionId(missionId);
         if (mission.isPresent()) {
             mission.get().setGateway(session);
+            System.out.println("Gateway setted");
         } else {
             // errore
         }
@@ -54,6 +55,7 @@ public class LacsServerEndpoint {
             if (mission.isPresent()) {
                 mission.get().getKits().values().forEach((k) -> {
                     try {
+                        System.out.println("Forwarding event");
                         k.getBasicRemote().sendText(message);
                     } catch (IOException e) {
                         // TODO Auto-generated catch block
