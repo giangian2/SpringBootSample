@@ -11,14 +11,13 @@ import org.springframework.stereotype.Component;
 import jakarta.websocket.Session;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collector;
 
-@Component
-@Getter
 public class MissionRepository {
-    private List<Mission> missions;
+    private List<Mission> missions = new ArrayList<>();
 
     public MissionRepository() {
-        this.missions = new ArrayList<>();
+
     }
 
     public void add(Mission mission) {
@@ -26,10 +25,7 @@ public class MissionRepository {
     }
 
     public Optional<Mission> findByMissionId(String missionId) {
-        return this.getMissions()
-                .stream()
-                .filter(el -> el.getMissionId().equals(missionId))
-                .findFirst();
+        return this.missions.stream().filter(m -> m.getMissionId().equals(missionId)).findFirst();
     }
 
 }

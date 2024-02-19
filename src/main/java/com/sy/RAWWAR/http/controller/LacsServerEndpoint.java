@@ -50,6 +50,17 @@ public class LacsServerEndpoint {
         try {
             var jsObject = new JSONObject(message);
             session.getBasicRemote().sendText(jsObject.getString("missionId"));
+            var mission = this.repo.findByMissionId(missionId);
+            if (mission.isPresent()) {
+                mission.get().getKits().values().forEach((k) -> {
+                    try {
+                        k.getBasicRemote().sendText(message);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                });
+            }
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

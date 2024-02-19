@@ -12,6 +12,7 @@ import com.sy.RAWWAR.dto.Passcode;
 import com.sy.RAWWAR.http.middleware.AuthEndpointFIlter;
 import com.sy.RAWWAR.model.ApiConfig;
 import com.sy.RAWWAR.model.ApiConfigFromYaml;
+import com.sy.RAWWAR.repository.MissionRepository;
 import com.sy.RAWWAR.repository.PasscodeRepository;
 
 @Configuration
@@ -23,9 +24,9 @@ public class AppConfiguration {
 	}
 
 	@Bean
-	CommandLineRunner run(ApiConfig apiConfig, PasscodeRepository repo) {
+	CommandLineRunner run(ApiConfig apiConfig, PasscodeRepository repo, MissionRepository missionRepo) {
 		return args -> {
-			System.out.println(apiConfig.getApiKey());
+			System.out.println(missionRepo.findByMissionId("01").toString());
 
 		};
 
@@ -44,6 +45,11 @@ public class AppConfiguration {
 	@Bean
 	public ApiConfig apiConfig() {
 		return new ApiConfigFromYaml();
+	}
+
+	@Bean
+	public MissionRepository missionRepo() {
+		return new MissionRepository();
 	}
 
 }

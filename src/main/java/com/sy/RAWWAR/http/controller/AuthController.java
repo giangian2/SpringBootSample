@@ -6,23 +6,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sy.RAWWAR.configuration.ApplicationContextProvider;
 import com.sy.RAWWAR.model.mission.Mission;
-import com.sy.RAWWAR.repository.MissionRepository;
-
-import net.bytebuddy.utility.RandomString;
+import com.sy.RAWWAR.repository.MissionRepository;;
 
 @Controller
 @RequestMapping("auth")
 public class AuthController {
 
-    @Autowired
-    private MissionRepository repo;
+    private MissionRepository repo = ApplicationContextProvider.getApplicationContext()
+            .getBean(MissionRepository.class);
 
     @PostMapping()
     public ResponseEntity<String> getWebSocketUrl() {
-        String generatedString = RandomString.make(10);
-        this.repo.add(new Mission(generatedString, "started", null));
-        return ResponseEntity.ok().body("http://localhost:3000/api/server/" + generatedString);
+        this.repo.add(new Mission("01", "started", null));
+
+        return ResponseEntity.ok().body("http://localhost:3000/api/server/" + "01");
     }
 
 }
