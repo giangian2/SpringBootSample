@@ -9,12 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.sy.RAWWAR.dto.Passcode;
 import com.sy.RAWWAR.http.middleware.AuthEndpointFIlter;
 import com.sy.RAWWAR.model.ApiConfig;
 import com.sy.RAWWAR.model.ApiConfigFromYaml;
-import com.sy.RAWWAR.repository.MissionRepository;
-import com.sy.RAWWAR.repository.PasscodeRepository;
+import com.sy.RAWWAR.repository.SocketRepository;
 
 @Configuration
 
@@ -26,7 +24,7 @@ public class AppConfiguration {
 	}
 
 	@Bean
-	CommandLineRunner run(ApiConfig apiConfig, PasscodeRepository repo, MissionRepository missionRepo) {
+	CommandLineRunner run(ApiConfig apiConfig, SocketRepository missionRepo) {
 		return args -> {
 			System.out.println(missionRepo.findByMissionId("01").toString());
 
@@ -50,8 +48,8 @@ public class AppConfiguration {
 	}
 
 	@Bean
-	public MissionRepository missionRepo() {
-		return new MissionRepository();
+	public SocketRepository socketRepo() {
+		return new SocketRepository();
 	}
 
 }

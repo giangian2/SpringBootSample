@@ -17,7 +17,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 
-import com.sy.RAWWAR.repository.MissionRepository;
+import com.sy.RAWWAR.repository.SocketRepository;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,7 +40,7 @@ public class WebSocketControllerTest {
     private ReactWebSocketHandler wsReactHandler;
 
     @Autowired
-    private MissionRepository missionRepo;
+    private SocketRepository missionRepo;
 
     @BeforeEach
     void setup() throws InterruptedException {

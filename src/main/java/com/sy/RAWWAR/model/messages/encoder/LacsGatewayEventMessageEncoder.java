@@ -2,7 +2,7 @@ package com.sy.RAWWAR.model.messages.encoder;
 
 import org.json.JSONObject;
 
-import com.sy.RAWWAR.model.messages.LacsGatewayEventMessage;
+import com.sy.RAWWAR.dto.LacsGatewayEventMessage;
 
 import jakarta.websocket.EncodeException;
 import jakarta.websocket.Encoder;

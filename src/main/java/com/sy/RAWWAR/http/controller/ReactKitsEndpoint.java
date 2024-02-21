@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.sy.RAWWAR.configuration.ApplicationContextProvider;
 import com.sy.RAWWAR.model.messages.decoder.LacsGatewayEventMessageDecoder;
 import com.sy.RAWWAR.model.messages.encoder.LacsGatewayEventMessageEncoder;
-import com.sy.RAWWAR.repository.MissionRepository;
+import com.sy.RAWWAR.repository.SocketRepository;
 
 import jakarta.websocket.OnOpen;
 import jakarta.websocket.Session;
@@ -19,8 +19,8 @@ import java.util.HashMap;
         LacsGatewayEventMessageEncoder.class }, decoders = {
                 LacsGatewayEventMessageDecoder.class })
 public class ReactKitsEndpoint {
-    private MissionRepository repo = ApplicationContextProvider.getApplicationContext()
-            .getBean(MissionRepository.class);
+    private SocketRepository repo = ApplicationContextProvider.getApplicationContext()
+            .getBean(SocketRepository.class);
 
     @OnOpen
     public void open(Session session, @PathParam("kitId") String kitId, @PathParam("missionId") String missionId,

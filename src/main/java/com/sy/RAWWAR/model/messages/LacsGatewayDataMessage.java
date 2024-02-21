@@ -2,15 +2,17 @@ package com.sy.RAWWAR.model.messages;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public class LacsGatewayDataMessage {
-    private final String missionId;
-    private final String missionStatus;
-    private final String kitId;
-    private final String sourceId;
-    private final String hitZone;
-    private final int ammoType;
-    private final boolean isKilled;
+    private String missionId;
+    private String missionStatus;
+    private String kitId;
+    private String sourceId;
+    private String hitZone;
+    private int ammoType;
+    private boolean isKilled;
 }

@@ -28,13 +28,13 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.sy.RAWWAR.model.mission.Mission;
-import com.sy.RAWWAR.repository.MissionRepository;
+import com.sy.RAWWAR.repository.SocketRepository;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class MissionRepositoryTest {
 
     @Autowired
-    private MissionRepository missionRepo;
+    private SocketRepository missionRepo;
 
     @Test
     public void contextLoads() {
