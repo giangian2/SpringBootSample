@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.json.JSONObject;
 
 import com.sy.RAWWAR.dto.LacsGatewayEventMessage;
+import com.sy.RAWWAR.enums.LacsEventType;
 import com.sy.RAWWAR.model.messages.LacsGatewayDataMessage;
 
 import jakarta.websocket.DecodeException;
@@ -27,45 +28,53 @@ public class LacsGatewayEventMessageDecoder implements Decoder.Text<LacsGatewayE
         var jsObject = new JSONObject(jsonMessage);
         var type = jsObject.optString("type");
         var dataObject = new JSONObject(jsObject.optString("data"));
+        var eventType = LacsEventType.fromString(type);
 
         if (!type.isEmpty()) {
-            switch (type) {
-                case "missionStatusEvent":
+            if (eventType.isPresent()) {
 
-                    missionId = dataObject.optString("missionId");
-                    missionStatus = dataObject.optString("missionStatus");
-                    if (missionId.isEmpty() || missionStatus.isEmpty()) {
+                switch (eventType.get()) {
+                    case MISSION_STATUS:
+
+                        missionId = dataObject.optString("missionId");
+                        missionStatus = dataObject.optString("missionStatus");
+                        if (missionId.isEmpty() || missionStatus.isEmpty()) {
+                            throw new IllegalStateException(
+                                    "missionId and missionStatus cannot be null for missionStatusEvent");
+                        }
+                        data = Optional.of(new LacsGatewayDataMessage(missionId, missionStatus, "", "", "", 0, false));
+                        break;
+
+                    case HIT_EVENT:
+                        kitId = dataObject.optString("kitId");
+                        sourceId = dataObject.optString("sourceId");
+                        hitZone = dataObject.optString("hitZone");
+                        ammoType = dataObject.optInt("ammoType");
+                        isKilled = dataObject.optBoolean("isKilled");
+                        if (kitId.isEmpty() || sourceId.isEmpty() || hitZone.isEmpty()) {
+                            throw new IllegalStateException("KitId, sourceId and hitZone cannot be null for hitEvent");
+                        }
+                        data = Optional
+                                .of(new LacsGatewayDataMessage("", "", kitId, sourceId, hitZone, ammoType, isKilled));
+                        break;
+
+                    case REVIVE_EVENT:
+                        kitId = dataObject.optString("kitId");
+                        sourceId = dataObject.optString("sourceId");
+                        if (kitId.isEmpty() || sourceId.isEmpty()) {
+                            throw new IllegalStateException("KitId and sourceId cannot be null for reviveEvent");
+                        }
+                        data = Optional.of(new LacsGatewayDataMessage("", "", kitId, sourceId, "", 0, false));
+                        break;
+
+                    default:
                         throw new IllegalStateException(
-                                "missionId and missionStatus cannot be null for missionStatusEvent");
-                    }
-                    data = Optional.of(new LacsGatewayDataMessage(missionId, missionStatus, "", "", "", 0, false));
-                    break;
+                                "JSON message does not have valid type, type received: " + type);
+                }
+            } else {
 
-                case "hitEvent":
-                    kitId = dataObject.optString("kitId");
-                    sourceId = dataObject.optString("sourceId");
-                    hitZone = dataObject.optString("hitZone");
-                    ammoType = dataObject.optInt("ammoType");
-                    isKilled = dataObject.optBoolean("isKilled");
-                    if (kitId.isEmpty() || sourceId.isEmpty() || hitZone.isEmpty()) {
-                        throw new IllegalStateException("KitId, sourceId and hitZone cannot be null for hitEvent");
-                    }
-                    data = Optional
-                            .of(new LacsGatewayDataMessage("", "", kitId, sourceId, hitZone, ammoType, isKilled));
-                    break;
-
-                case "reviveEvent":
-                    kitId = dataObject.optString("kitId");
-                    sourceId = dataObject.optString("sourceId");
-                    if (kitId.isEmpty() || sourceId.isEmpty()) {
-                        throw new IllegalStateException("KitId and sourceId cannot be null for reviveEvent");
-                    }
-                    data = Optional.of(new LacsGatewayDataMessage("", "", kitId, sourceId, "", 0, false));
-                    break;
-
-                default:
-                    throw new IllegalStateException("JSON message does not have valid type, type received: " + type);
             }
+
         } else {
             throw new IllegalStateException("JSON message does not have a type");
         }
@@ -74,7 +83,8 @@ public class LacsGatewayEventMessageDecoder implements Decoder.Text<LacsGatewayE
             throw new IllegalStateException("JSON message does not have a data attribute");
         }
 
-        return new LacsGatewayEventMessage(jsObject.getString("timestamp"), jsObject.getString("type"),
+        return new LacsGatewayEventMessage(jsObject.getString("timestamp"),
+                eventType.get(),
                 data.get());
 
     }

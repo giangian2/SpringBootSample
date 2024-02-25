@@ -16,17 +16,11 @@ public class Mission {
     private Map<String, Session> kits;
     private Session gateway;
     private String missionId;
-    private String missionStatus;
 
-    public Mission(String missionId, String missionStatus, Session gateway) {
+    public Mission(String missionId, Session gateway) {
         this.missionId = missionId;
-        this.missionStatus = missionStatus;
         this.gateway = gateway;
         this.kits = new HashMap<>();
-    }
-
-    public void updateMissionStatus(String newStatus) {
-        this.missionStatus = newStatus;
     }
 
     public void addKit(String kitId, Session wsSession) {

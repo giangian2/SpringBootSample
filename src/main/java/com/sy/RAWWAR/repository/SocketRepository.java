@@ -28,4 +28,16 @@ public class SocketRepository {
         return this.missions.stream().filter(m -> m.getMissionId().equals(missionId)).findFirst();
     }
 
+    public void removeMission(String missionId) {
+        if (!this.findByMissionId(missionId).isEmpty()) {
+            this.missions.removeIf((m) -> m.getMissionId().equals(missionId));
+        }
+    }
+
+    public void removeKit(String missionId, String kitId) {
+        if (!this.findByMissionId(missionId).isEmpty()) {
+            this.findByMissionId(missionId).get().getKits().remove(kitId);
+        }
+    }
+
 }

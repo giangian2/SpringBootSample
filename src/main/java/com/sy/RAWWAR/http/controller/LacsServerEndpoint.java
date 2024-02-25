@@ -46,7 +46,7 @@ public class LacsServerEndpoint {
 
         var mission = this.missionRepo.findById(missionId);
         if (mission.isPresent()) {
-            this.socketRepo.add(new Mission(missionId, "started", session));
+            this.socketRepo.add(new Mission(missionId, session));
             System.out.println("Gateway setted");
         } else {
             // errore
@@ -81,8 +81,8 @@ public class LacsServerEndpoint {
     }
 
     @OnClose
-    public void close(Session session) {
-
+    public void close(Session session, @PathParam("missionId") String missionId) {
+        this.socketRepo.removeMission(missionId);
     }
 
     @OnError

@@ -43,7 +43,7 @@ public class MissionRepositoryTest {
 
     @Test
     public void insert() {
-        this.missionRepo.add(new Mission("01", "START", null));
+        this.missionRepo.add(new Mission("01", null));
         assertTrue(this.missionRepo.findByMissionId("01").isPresent());
     }
 

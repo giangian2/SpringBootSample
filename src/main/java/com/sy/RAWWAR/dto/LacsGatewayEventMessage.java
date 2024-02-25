@@ -16,6 +16,6 @@ import lombok.Setter;
 @Setter
 public class LacsGatewayEventMessage {
     private final String timestamp;
-    private final String type;
+    private final LacsEventType type;
     private final LacsGatewayDataMessage data;
 }

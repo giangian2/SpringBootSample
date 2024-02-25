@@ -27,7 +27,7 @@ public enum LacsEventType {
         }
     }
 
-    public Optional<LacsEventType> fromString(String string) {
+    public static Optional<LacsEventType> fromString(String string) {
         switch (string) {
             case "missionStatusEvent":
                 return Optional.of(MISSION_STATUS);

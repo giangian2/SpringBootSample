@@ -19,15 +19,11 @@ import java.util.ArrayList;
 @RequestMapping("auth")
 public class AuthController {
 
-    private SocketRepository repo = ApplicationContextProvider.getApplicationContext()
-            .getBean(SocketRepository.class);
-
     @Autowired
     private MissionRepository missionRepo;
 
     @PostMapping()
     public ResponseEntity<String> getWebSocketUrl() {
-        this.repo.add(new Mission("01", "started", null));
         missionRepo.save(new MissionDto("01", "started", new ArrayList<String>(), null, null));
         return ResponseEntity.ok().body("http://localhost:3000/api/server/" + "01");
     }
